@@ -50,9 +50,9 @@ import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import VoiceButton from "./voiceButton";
-import KanbanFeature from "./KanbanFeature";
 import NotesFeature from "./NotesFeature";
 import { Id } from "../../../../convex/_generated/dataModel";
+import { KanbanFeature } from "./KanbanFeature";
 //import { Value } from "@radix-ui/react-select";
 //import TextAlign from "@tiptap/extension-text-align";
 
@@ -708,8 +708,8 @@ export const Toolbar = ({ onAskAI, document }: ToolbarProps) => {
             {/* Voice to speech */}
             <VoiceButton />
             <Separator orientation="vertical" className="h-6 bg-neutral-300" />
-            {/*Kanban Option */}
-            <KanbanFeature/>
+            {/* Kanban Feature */}
+            <KanbanFeature documentId={document._id} />
             {/* Notes Feature */}
             <NotesFeature mode="document" documentId={document._id}/>
             {/* Content Generation AI Button */}
