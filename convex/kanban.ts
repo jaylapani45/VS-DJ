@@ -6,12 +6,20 @@ import { Id } from "./_generated/dataModel";
 export const getBoard = query({
   args: { documentId: v.id("documents") },
   handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) throw new Error("Not authenticated");
+
     const board = await ctx.db
       .query("kanbanBoards")
       .withIndex("by_document_id", (q) => q.eq("documentId", args.documentId))
       .first();
 
     if (!board) return null;
+
+    // Check if user has access (either owner or same organization)
+    if (board.ownerId !== identity.subject && board.organizationId !== identity.orgId) {
+      throw new Error("Not authorized");
+    }
 
     const columns = await ctx.db
       .query("kanbanColumns")
@@ -51,7 +59,7 @@ export const createBoard = mutation({
       documentId: args.documentId,
       title: args.title,
       ownerId: identity.subject,
-      organizationId: identity.orgId,
+      organizationId: identity.orgId ? String(identity.orgId) : undefined,
     });
 
     // Create default columns

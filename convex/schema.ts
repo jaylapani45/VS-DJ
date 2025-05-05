@@ -39,33 +39,33 @@ export default defineSchema({
 
   // Kanban Tables
     
-  kanbanBoards: defineTable({
-    title: v.string(),
-    ownerId: v.string(),
-    organizationId: v.optional(v.string()),
-    documentId: v.optional(v.id("documents")),
-  })
-    .index("by_owner_id", ["ownerId"])
-    .index("by_organization_id", ["organizationId"])
-    .index("by_document_id", ["documentId"]),
+  // kanbanBoards: defineTable({
+  //   title: v.string(),
+  //   ownerId: v.string(),
+  //   organizationId: v.optional(v.string()),
+  //   documentId: v.optional(v.id("documents")),
+  // })
+  //   .index("by_owner_id", ["ownerId"])
+  //   .index("by_organization_id", ["organizationId"])
+  //   .index("by_document_id", ["documentId"]),
 
-  kanbanColumns: defineTable({
-    boardId: v.id("kanbanBoards"),
-    title: v.string(),
-    type: v.string(),
-    order: v.number(),
-  })
-    .index("by_board_id", ["boardId"]),
+  // kanbanColumns: defineTable({
+  //   boardId: v.id("kanbanBoards"),
+  //   title: v.string(),
+  //   type: v.string(),
+  //   order: v.number(),
+  // })
+  //   .index("by_board_id", ["boardId"]),
 
-  kanbanTasks: defineTable({
-    columnId: v.id("kanbanColumns"),
-    boardId: v.id("kanbanBoards"),
-    content: v.string(),
-    position: v.number(),
-    ownerId: v.string(),
-  })
-    .index("by_column_id", ["columnId"])
-    .index("by_board_id", ["boardId"]),
+  // kanbanTasks: defineTable({
+  //   columnId: v.id("kanbanColumns"),
+  //   boardId: v.id("kanbanBoards"),
+  //   content: v.string(),
+  //   position: v.number(),
+  //   ownerId: v.string(),
+  // })
+  //   .index("by_column_id", ["columnId"])
+  //   .index("by_board_id", ["boardId"]),
 
 notes: defineTable({
   documentId: v.optional(v.id("documents")),
@@ -100,4 +100,32 @@ notes: defineTable({
   //     })
   //   ),
   // }).index("by_document", ["documentId"]),
+
+  kanbanBoards: defineTable({
+    title: v.string(),
+    ownerId: v.string(),
+    organizationId: v.optional(v.string()),
+    documentId: v.optional(v.id("documents")),
+  })
+    .index("by_owner_id", ["ownerId"])
+    .index("by_organization_id", ["organizationId"])
+    .index("by_document_id", ["documentId"]),
+
+  kanbanColumns: defineTable({
+    boardId: v.id("kanbanBoards"),
+    title: v.string(),
+    type: v.string(),
+    order: v.number(),
+  })
+    .index("by_board_id", ["boardId"]),
+
+  kanbanTasks: defineTable({
+    columnId: v.id("kanbanColumns"),
+    boardId: v.id("kanbanBoards"),
+    content: v.string(),
+    position: v.number(),
+    ownerId: v.string(),
+  })
+    .index("by_column_id", ["columnId"])
+    .index("by_board_id", ["boardId"]),
 });
